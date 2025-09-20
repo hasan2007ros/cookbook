@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ user[0] }}'s Kitchen</title>
+  <!-- Uses Jinja to link to the styling for my kitchen -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles-kitchen.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <header>
+    <nav>
+      <div class="logo">
+        <!-- logo image in the nav; text is baked into the image so no flex needed here -->
+        <img src="{{ url_for('static', filename='logos/navigator logo.png') }}" alt="Cookbook Logo">
+      </div>
+      <ul class="nav-links">
+        <!-- Jinja url_for generates correct paths to routes (took me too long to figure out tbh) -->
+        <li><a href="{{ url_for('home') }}">Home</a></li>
+        <li><a href="{{ url_for('discover') }}">Discover</a></li>
+        <li><a href="{{ url_for('random_recipe') }}">Surprise Me!</a></li>
+        <li><a href="#">Forum</a></li>
+
+        <!-- If the user is logged in (session has 'user_name') show a little welcome + extra links -->
+        {% if session.get('user_name') %}
+          <li class="nav-welcome">Welcome, {{ session['user_name'] }}!</li> <!-- simple non-clickable label -->
+          <li><a href="{{ url_for('upload_recipe') }}">Upload Recipe</a></li>
+          <li><a href="{{ url_for('logout') }}">Logout</a></li>
+        {% else %}
+          <!-- otherwise show login/register links -->
+          <li><a href="{{ url_for('login') }}">Login</a></li>
+          <li><a href="{{ url_for('register') }}">Register</a></li>
+        {% endif %}
+      </ul>
+    </nav>
+  </header>
+
+  <header class="banner">
+    {% if user[1] %}
+      <!-- if the user has uploaded a banner image (user[1] = banner filename), show it -->
+      <img src="{{ url_for('static', filename='uploads/' ~ user[1]) }}" alt="Banner" class="banner-img">
+    {% else %}
+      <!-- no banner yet: show a placeholder so the layout doesn’t collapse -->
+      <div class="banner-placeholder"></div>
+    {% endif %}
+
+    <div class="profile-section">
+      {% if user[2] %}
+        <!-- if the user has a profile picture (user[2] = profile filename), show it -->
+        <img src="{{ url_for('static', filename='uploads/' ~ user[2]) }}" alt="Profile Picture" class="profile-pic">
+      {% else %}
+        <!-- otherwise a simple placeholder so it doesn’t look empty -->
+        <div class="profile-placeholder"></div>
+      {% endif %}
+      <!-- username beside/under the profile picture -->
+      <h1>{{ user[0] }}</h1>
+    </div>
+  </header>
+
+  {% if user[3] %}
+    <!-- user bio exists (user[3]); show it under the header -->
+    <div class="user-bio">
+      <p>{{ user[3] }}</p>
+    </div>
+  {% endif %}
+
+  <main>
+    <h2>{{ user[0] }}’s Kitchen 🥄</h2>
+
+    {% if recipes %}
+      <!-- user has recipes: render a scrollable/card list -->
+      <div class="recipe-scroll">
+        {% for recipe in recipes %}
+          <!-- each recipe becomes a clickable card -->
+          <div class="recipe-card">
+            <a href="{{ url_for('recipe_detail', recipe_id=recipe[0]) }}">
+              {% if recipe[2] %}
+                <!-- recipe[2] = image filename; show the uploaded one -->
+                <img src="{{ url_for('static', filename='uploads/' ~ recipe[2]) }}" alt="{{ recipe[1] }}">
+              {% else %}
+                <!-- fallback image if none uploaded -->
+                <img src="{{ url_for('static', filename='default-recipe.jpg') }}" alt="Default Recipe">
+              {% endif %}
+              <!-- recipe[1] = title, recipe[3] = star rating -->
+              <p>{{ recipe[1] }} (⭐ {{ recipe[3] }})</p>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <!-- no recipes yet; friendly empty-state message (free UX marks apparently...) -->
+      <p class="no-recipes">This kitchen has no recipes yet.</p>
+    {% endif %}
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <p>Contact us:</p>
+      <p>Email: cookbook-official@gmail.com</p>
+      <p>Phone: +447123074309</p>
+    </div>
+    <div class="footer-brand">@Cookbook 2025</div>
+  </footer>
+
+</body>
+</html>

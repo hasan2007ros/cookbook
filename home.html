@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cookbook Home</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <nav>
+  <div class="menu-toggle">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+      <div class="logo">
+        <img src="{{ url_for('static', filename='logos/navigator logo.png') }}" alt="Cookbook Logo">
+      </div>
+      <ul class="nav-links">
+        <li><a href="{{ url_for('home') }}">Home</a></li>
+        <li><a href="{{ url_for('discover') }}">Discover</a></li>
+        <li><a href="{{ url_for('random_recipe') }}">Surprise Me!</a></li>
+        <li><a href="#">Forum</a></li>
+        {% if session.get('user_name') %}
+          <li class="nav-welcome">Welcome, {{ session['user_name'] }}!</li>
+          <li><a href="{{ url_for('upload_recipe') }}">Upload Recipe</a></li>
+          <li><a href="{{ url_for('logout') }}">Logout</a></li>
+        {% else %}
+          <li><a href="{{ url_for('login') }}">Login</a></li>
+          <li><a href="{{ url_for('register') }}">Register</a></li>
+        {% endif %}
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+  <section class="fade-in">
+    <section class="hero">
+      <div class="hero-content">
+        <img alt="Hero Logo" class="hero-icon" src="{{ url_for('static', filename='logos/Hero Logo no text.png') }}"/>
+        <div class="hero-text">
+          <h1 class="hero-greet">
+            {% if session.get('user_name') %}
+              Welcome back, {{ session['user_name'] }}!
+            {% else %}
+              Welcome to Cookbook!
+            {% endif %}
+          </h1>
+          <p>
+            Whether you're looking for a new recipe or ready to show off your amazing kitchen skills,<br/>
+            chef's secrets and special touches, you're in the right place!
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="top-picks">
+      <h2>Our Top Picks!</h2>
+      <div class="cards">
+        {% for recipe in top_recipes %}
+        <div class="card">
+          <a href="{{ url_for('recipe_detail', recipe_id=recipe.id) }}">
+            <img alt="{{ recipe.name }}" src="{{ url_for('static', filename='uploads/' ~ recipe.image) }}"/>
+            <p>{{ recipe.name }}</p>
+          </a>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="mission">
+      <h3>Our mission (the boring stuff):</h3>
+      <p>
+        Cooking is a vital life skill that everyone should have, yet it is increasingly neglected in both childhood education and adult life. Many people grow up—or even reach adulthood—without knowing how to prepare basic meals, relying instead on processed foods or takeaways, which can negatively impact health, finances, and independence.
+      </p>
+      <p>
+        Cookbook aims to change that by making cooking accessible, engaging, and rewarding for all ages. Whether you're a child learning your first recipe or an adult finally taking control of your diet, our website provides step-by-step guidance, fun challenges, and clear instructions to help build confidence in the kitchen.
+      </p>
+    </section>
+    </section>
+</main>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+  <a class="floating-btn" href="{{ url_for('my_kitchen') }}">
+    🍳 My Kitchen
+  </a>
+
+  <footer>
+    <div class="footer-content">
+      <p>Contact us:</p>
+      <p>Email: cookbook-official@gmail.com</p>
+      <p>Phone: +447123074309</p>
+    </div>
+    <div class="footer-brand">@Cookbook 2025</div>
+  </footer>
+</body>
+</html>

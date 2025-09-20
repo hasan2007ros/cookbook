@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upload a recipe</title>
+  <!-- Link upload-recipe specific stylesheet via Flask static -->
+  <link href="{{ url_for('static', filename='styles-upload-recipe.css') }}" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="logo">
+        <!-- Logo loaded from static folder -->
+        <img src="{{ url_for('static', filename='logos/navigator logo.png') }}" alt="Cookbook Logo">
+      </div>
+      <ul class="nav-links">
+        <!-- Home route -->
+        <li><a href="{{ url_for('home') }}">Home</a></li>
+        <!-- Discover route -->
+        <li><a href="{{ url_for('discover') }}">Discover</a></li>
+        <!-- Surprise Me route -->
+        <li><a href="{{ url_for('random_recipe') }}">Surprise Me!</a></li>
+        <li><a href="#">Forum</a></li>
+        <!-- If user logged in, display personalised links -->
+        {% if session.get('user_name') %}
+          <!-- Show logged-in user's name -->
+          <li class="nav-welcome">Welcome, {{ session['user_name'] }}!</li>
+          <!-- Upload Recipe link (only for logged-in users) -->
+          <li><a href="{{ url_for('upload_recipe') }}">Upload Recipe</a></li>
+          <!-- Logout link -->
+          <li><a href="{{ url_for('logout') }}">Logout</a></li>
+        {% else %}
+          <!-- Login link (only if not logged in) -->
+          <li><a href="{{ url_for('login') }}">Login</a></li>
+          <!-- Register link (only if not logged in) -->
+          <li><a href="{{ url_for('register') }}">Register</a></li>
+        {% endif %}
+      </ul>
+    </nav>
+  </header>
+  
+  <div class="heading-container">
+   <h1 id="title">
+    Upload your own recipe!
+   </h1>
+   <p id="description">
+    Please fill in this form to share your recipe with the CookBook community!
+   </p>
+  </div>
+  <!-- Form posts to upload_recipe route -->
+  <form action="{{ url_for('upload_recipe') }}" enctype="multipart/form-data" method="post">
+   <fieldset>
+    <p class="input-query">
+     What type of recipe are you sharing?
+    </p>
+    <label class="recipe-radio">
+     <input name="recipe_type" type="radio" value="Starter"/>
+     Starter
+    </label>
+    <label class="recipe-radio">
+     <input name="recipe_type" type="radio" value="Main"/>
+     Main
+    </label>
+    <label class="recipe-radio">
+     <input name="recipe_type" type="radio" value="Sides"/>
+     Sides
+    </label>
+    <label class="recipe-radio">
+     <input name="recipe_type" type="radio" value="Dessert"/>
+     Dessert
+    </label>
+    <br/>
+    <p class="input-query">
+     What is the name of your recipe?
+    </p>
+    <input name="recipe_name" placeholder="i.e. Macaroni and Cheese" required="" type="text"/>
+    <br/>
+    <label class="input-query">
+     Ingredients
+    </label>
+    <div id="ingredients-container">
+     <div class="ingredient-row">
+      <input name="ingredients[]" placeholder="e.g., 200g flour" required="" type="text"/>
+      <button aria-label="Remove ingredient" class="remove-ingredient" type="button">
+       –
+      </button>
+     </div>
+    </div>
+    <button id="add-ingredient" type="button">
+     + Add Ingredient
+    </button>
+    <br/>
+    <label for="prep-time">
+     Preparation Time (minutes)
+    </label>
+    <input id="prep-time" min="1" name="prep_time" required="" type="number"/>
+    <br/>
+    <label for="instructions">
+     Instructions
+    </label>
+    <br/>
+    <textarea id="instructions" name="instructions" placeholder="Step-by-step guide" required="" rows="5"></textarea>
+    <br/>
+    <label for="image">
+     Upload an Image (optional)
+    </label>
+    <input accept="image/*" id="image" name="image" type="file"/>
+   </fieldset>
+   <div class="submit-container">
+    <input id="submit" type="submit" value="Submit"/>
+   </div>
+   <br/>
+  </form>
+  <footer>
+   <div class="footer-content">
+    <p>
+     Contact us:
+    </p>
+    <p>
+     Email: cookbook-official@gmail.com
+    </p>
+    <p>
+     Phone: +447123074309
+    </p>
+   </div>
+   <div class="footer-brand">
+    @Cookbook 2025
+   </div>
+  </footer>
+	<script>
+	  // Get references to the ingredient container and "Add Ingredient" button
+	  const container = document.getElementById('ingredients-container');
+	  const addButton = document.getElementById('add-ingredient');
+
+	  // Function to create a new ingredient input row
+	  function createIngredientRow() {
+		// Create a wrapper <div> for one ingredient row
+		const row = document.createElement('div');
+		row.className = 'ingredient-row';
+
+		// Create a text input for ingredient details
+		const input = document.createElement('input');
+		input.type = 'text';
+		input.name = 'ingredients[]';   // Array-style name lets Flask collect multiple values
+		input.placeholder = 'e.g., 1 tsp sugar';
+		input.required = true;          // Prevents form submission without filling this field
+
+		// Create a remove button for this ingredient row
+		const removeBtn = document.createElement('button');
+		removeBtn.type = 'button';      // So it doesn’t trigger form submission
+		removeBtn.className = 'remove-ingredient';
+		removeBtn.textContent = '–';    // Display a minus sign
+		removeBtn.addEventListener('click', function() {
+		  row.remove();                 // When clicked, remove this row
+		});
+
+		// Assemble the row and add to the container
+		row.appendChild(input);
+		row.appendChild(removeBtn);
+		container.appendChild(row);
+	  }
+
+	  // Attach click event to "Add Ingredient" button to add new rows
+	  addButton.addEventListener('click', createIngredientRow);
+	</script>
+ </body>
+</html>

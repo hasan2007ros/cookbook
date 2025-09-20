@@ -1,0 +1,318 @@
+/* Reset and global font setup */
+* { /* universal selector */
+  padding: 0; /* basically same thing as the margin: 0; for padding*/
+  box-sizing: border-box; /* makes it easier to work with width and height alongside margins and padding*/
+  font-family: 'Nunito', sans-serif; /* Global font */
+}
+
+/* ===== BASE TOKENS (CSS Variables for easy reuse) - I had no idea about this but ChatGPT said it made it easier to access site-wide colorss ===== */
+:root {
+  --bg: #FBF1DE;       /* Background color for main areas */
+  --text: #333333;     /* Default text color */
+  --brand-1: #2C6E49;  /* Darker brand green */
+  --brand-2: #437A46;  /* Secondary green shade */
+  --card: #6A8D5A;     /* Card background */
+  --white: #FFFFFF;    /* Pure white */
+}
+
+/* ===== GLOBAL & RESET (reset browser default styles (e.g. margins, paddings, font sizes)) ===== */
+body {
+  background-color: var(--bg);  /* uses variable defined above for the background */
+  color: var(--text);
+  line-height: 1.6;             /* improves text readability (controls vertical height between lines of text)*/
+}
+
+/* ===== HEADER & NAVIGATION ===== */
+header {
+  background-color: var(--white);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* the slight shadow looks so much better... */
+  padding: 0.75rem 0;
+}
+
+nav {
+  display: flex; /* Flexbox - very difficult to understand and needed ChatGPT help with alignment but made alignment much more proficient */
+  align-items: center; /* vertical center alignment of nav items */
+  max-width: 1200px;   /* centers content within a max width, doesn't force nav bar to stretch out too far when big windows */
+  margin: 0 auto; /* auto = left and right margins are made equal */
+  padding: 0 2rem /* apparently rem is browsers base font size which is 16px, for a while I was solely reliant on using px but it got messy */;
+}
+
+.logo img {
+  height: 40px; /* logo size */
+}
+
+.nav-links {
+  list-style: none; /* remove the bullet points since I made the nav elements as an unordered list... */
+  display: flex;
+  gap: 3rem;        /* consistent spacing between the nav items */
+  margin-left: 4rem; /* without this, there would be no gap between the logo in the nav bar and the nav elements so they overlap, very messy */
+}
+
+
+.nav-links a {
+  text-decoration: none; /* removes underline since the nav elements are links to different pages and the default styling is underlined */
+  color: var(--text); /* the default text color for links would be blue or purple depending on whether the website was visited, not a fan */
+  font-weight: 600; /* this was a later addition, my nav bar looked so ugly before it */
+}
+
+.nav-links a:hover {
+  color: var(--brand-1); /* when you hover over a link on the nav bar, the color changes to a dark green - not necessary but my page seemed too boring */
+}
+
+.nav-welcome {
+  color: var(--brand-1); /* the welcome, user part is set to the dark green hover color by default since you can't click it - and it looked bland */
+  font-weight: 700; /* slightly more emphasis for the welcome part, just seemed rational */
+}
+
+/* ================================
+   Banner + Profile
+================================ */
+.banner {
+  position: relative;
+  width: 100%;
+  height: 250px;
+  background: var(--brand-1);
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+}
+
+.banner-img,
+.banner-placeholder {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  /*z-index: -1; pushes an element to back this took me two hours to fix it covered the banner from uploading and I thought it was a database issue... */         
+}
+
+.banner-placeholder {
+  background: #ccc;
+}
+
+.profile-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  position: absolute;
+  bottom: -60px;
+  left: 2rem;
+}
+
+.profile-pic,
+.profile-placeholder {
+  width: 120px;
+  height: 120px;
+  border-radius: 15px; /* squarish like chess.com */
+  border: 3px solid #fff;
+  object-fit: cover;
+  background: #eee;
+}
+
+.profile-section h1 {
+  font-size: 1.8rem;
+  color: black;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.4);
+  position: relative;
+  top: 25px;   /* move text down by 8px, tweak to taste */
+  font-family: nunito, sans-serif;
+}
+
+
+body {
+  background-color: #FBF1DE;
+  margin: 0;
+  font-family: sans-serif;
+}
+
+main {
+  padding-left: 3rem;   /* new left space */
+  padding-right: 3rem;  /* new right space */
+}
+
+h2 {
+	font-family: nunito, sans-serif;
+	color: black;
+}
+
+.user-bio {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1rem 2rem;
+  background: #fffaf0;
+  border-left: 5px solid var(--brand-1);
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--text);
+  text-align: center;
+    font-family: nunito, sans-serif;
+}
+
+
+
+/* ================================
+   Scrollable Recipes
+================================ */
+.recipe-scroll {
+  display: flex; /* line up recipe cards horizontally */
+  gap: 1rem; /* spacing between each card */
+  overflow-x: auto; /* enable horizontal scrolling */
+  padding: 2rem 0; /* only top/bottom padding */
+  scroll-snap-type: x mandatory; /* snaps cards neatly when scrolling */
+}
+
+.recipe-card {
+  flex: 0 0 calc(100% / 3 - 1rem); /* show 3 cards at a time - this line was ChatGPT generated */
+  background: #6A8D5A; /* card background (light green theme) */
+  border-radius: 10px; /* rounded corners */
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15); /* subtle shadow for depth */
+  text-align: center;
+  transition: transform 0.2s; /* smooth hover animation */
+  color: var(--white); /* white text for contrast */
+  font-weight: 600;
+  scroll-snap-align: start; /* makes each card snap into place when scrolling */
+}
+
+.recipe-card:hover {
+  transform: scale(1.05); /* slightly enlarges card on hover */
+}
+
+.recipe-card img {
+  width: 100%; /* fills the card horizontally */
+  height: 200px; /* fixed image height */
+  object-fit: cover; /* crops image without stretching */
+  border-radius: 10px 10px 0 0; /* only round top corners of image */
+}
+
+/* custom scrollbar styling because the default styling did not match the theme I was looking for*/
+.recipe-scroll {
+  display: flex; 
+  gap: 1rem;
+  overflow-x: auto;
+  padding: 2rem 0;
+  scroll-snap-type: x mandatory; /* one of my favourite touches, makes sure there is always 3 full cards when you scroll */
+}
+
+/* to make it work in Chrome, Edge, Safari */
+.recipe-scroll::-webkit-scrollbar {
+  height: 12px;  /* thicker scrollbar */
+}
+
+.recipe-scroll::-webkit-scrollbar-track {
+  background: #e8e8e8;  /* light gray scrollbar background */
+  border-radius: 0;      /* keep rectangular */
+}
+
+.recipe-scroll::-webkit-scrollbar-thumb {
+  background-color: #6da87a; /* green scrollbar thumb */
+  border-radius: 0;          /* rectangular shape */
+}
+
+.recipe-scroll::-webkit-scrollbar-thumb:hover {
+  background-color: #5a8f66; /* darker green on hover */
+}
+
+/* Firefox support */
+.recipe-scroll {
+  scrollbar-width: thin;               /* make it slim */
+  scrollbar-color: #6da87a #e8e8e8;   /* thumb and track */
+}
+
+a {
+	text-decoration: none;
+	color: white;
+}
+
+.no-recipes {
+  padding: 2rem;
+  font-size: 1.2rem;
+  text-align: center;
+  color: var(--brand-2);
+}
+
+
+/* Banner and profile picture upload */
+.banner-upload, .profile-upload {
+  margin-top: 10px;
+}
+
+.banner-upload input, .profile-upload input {
+  font-size: 0.9rem;
+}
+
+.banner-upload button, .profile-upload button {
+  background: var(--brand-1);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.banner-upload button:hover, .profile-upload button:hover {
+  background: var(--brand-2);
+}
+
+/* Make sure profile pic doesn't overlap controls */
+.profile-section {
+  z-index: 1;   /* keep it above the banner */
+}
+
+.upload-controls {
+  position: relative;
+  z-index: 2;   /* push controls above profile section */
+  margin-top: 5rem;  /* push them further down so they clear the profile pic */
+  margin-left: 2rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.upload-controls form {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #f8f8f8;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.upload-controls button {
+  background: var(--brand-1); /* dark green background so that the buttons stand out */
+  color: white; /* white text for contrast, makes it more readable according to my sister */
+  border: none; /* remove the ugly default browser border */
+  padding: 0.4rem 0.8rem; /* bit of space inside the button so text isn’t squished */
+  border-radius: 4px; /* slightly rounded corners – looks more modern but I rinsed this design */
+  cursor: pointer; /* mouse turns into pointer hand on hover so it feels clickable, made it much smoother */
+  font-weight: 600; /* thicker text so the buttons don’t look weak and the user knows its function */
+}
+
+.upload-controls button:hover {
+  background: var(--brand-2); /* hover effect: lighter green shade when mouse hovers over */
+}
+
+
+/* ===== FOOTER ===== */
+footer {
+  background-color: var(--brand-1);
+  color: var(--white);
+  padding: 1.5rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  font-size: 0.9rem;
+}
+
+.footer-content p {
+  margin-bottom: 0.3rem;
+}
+
+.footer-brand {
+  font-weight: bold;
+  align-self: flex-end;
+  margin-top: 1rem;
+}

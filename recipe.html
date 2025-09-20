@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ recipe.name }}</title>
+  <!-- Page title uses recipe.name variable -->
+  <!-- Link page-specific stylesheet via Flask's `url_for('static', ...)` -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles-recipe.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+	<nav>
+      <div class="logo">
+        <!-- Load logo from static folder via Flask -->
+        <img src="{{ url_for('static', filename='logos/navigator logo.png') }}" alt="Cookbook Logo">
+      </div>
+      <ul class="nav-links">
+        <!-- Link to home route -->
+        <li><a href="{{ url_for('home') }}">Home</a></li>
+        <!-- Link to discover route -->
+        <li><a href="{{ url_for('discover') }}">Discover</a></li>
+        <!-- Random recipe route -->
+        <li><a href="{{ url_for('random_recipe') }}">Surprise Me!</a></li>
+        <li><a href="#">Forum</a></li>
+        <!-- If user logged in, show personalised nav -->
+        {% if session.get('user_name') %}
+          <!-- Output the username from session -->
+          <li class="nav-welcome">Welcome, {{ session['user_name'] }}!</li>
+          <!-- Authenticated-only actions -->
+          <li><a href="{{ url_for('upload_recipe') }}">Upload Recipe</a></li>
+          <!-- Authenticated-only actions -->
+          <li><a href="{{ url_for('logout') }}">Logout</a></li>
+        {% else %}
+          <!-- Guest-only actions -->
+          <li><a href="{{ url_for('login') }}">Login</a></li>
+          <!-- Guest-only actions -->
+          <li><a href="{{ url_for('register') }}">Register</a></li>
+        {% endif %}
+      </ul>
+    </nav>
+  </header>
+  
+    <!-- Output the recipe's name as heading -->
+  <h1>{{ recipe.name }}</h1>
+  <p class="author">By: {{ recipe.author }}</p>
+
+	<main class="recipe-container">
+	  <section class="recipe-text">
+		<h2>Description</h2>
+		<p>{{ recipe.description }}</p>
+
+		<h2>Ingredients</h2>
+		<ul>
+		  {% for ingredient in recipe.ingredients %}
+			<li>{{ ingredient }}</li>
+		  {% endfor %}
+		</ul>
+
+		<h2>Instructions</h2>
+		<p>{{ recipe.instructions }}</p>
+
+        <!-- Preparation time in minutes -->
+		<p><strong>Prep Time:</strong> {{ recipe.prep_time }} minutes</p>
+	  </section>
+
+	  <aside class="recipe-sidebar">
+      <!-- If the recipe has an image filename, display it; otherwise show placeholder -->
+		{% if recipe.image %}
+    <!-- Output the recipe's name as heading -->
+		  <img src="{{ url_for('static', filename='uploads/' ~ recipe.image) }}" alt="{{ recipe.name }}">
+		{% else %}
+		  <img src="{{ url_for('static', filename='default-recipe.jpg') }}" alt="Recipe image">
+		{% endif %}
+
+		<div class="rating-box">
+		  <h3>Rate this Recipe</h3>
+		  <p><strong>Current Score:</strong> {{ recipe.rating }}</p>
+		  <div class="vote-buttons">
+			<form action="{{ url_for('vote_recipe', recipe_id=recipe.id, action='up') }}" method="post">
+			  <button type="submit" class="yum">🍴 Yum</button>
+			</form>
+			<form action="{{ url_for('vote_recipe', recipe_id=recipe.id, action='down') }}" method="post">
+			  <button type="submit" class="tomato">🍅 Tomato</button>
+			</form>
+		  </div>
+		</div>
+	  </aside>
+	</main>
+
+    <footer>
+    <div class="footer-content">
+      <p>Contact us:</p>
+      <p>Email: cookbook-official@gmail.com</p>
+      <p>Phone: +447123074309</p>
+    </div>
+    <div class="footer-brand">@Cookbook 2025</div>
+  </footer>
+  
+</body>
+</html>

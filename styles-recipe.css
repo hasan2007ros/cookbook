@@ -1,0 +1,236 @@
+/* ===========================
+   Design Tokens
+   =========================== */
+:root {
+  --bg: #FBF1DE;
+  --text: #333333;
+  --brand-1: #2C6E49;
+  --brand-2: #437A46;
+  --card: #6A8D5A;
+  --white: #FFFFFF;
+}
+
+/* ===========================
+   Global Styles
+   =========================== */
+body {
+  background-color: #f6ebd8; /* beige from homepage */
+  font-family: 'Nunito', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* ===== HEADER & NAVIGATION ===== */
+header {
+  background-color: var(--white);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* the slight shadow looks so much better... */
+  padding: 0.75rem 0;
+}
+
+nav {
+  display: flex; /* Flexbox - very difficult to understand and needed ChatGPT help with alignment but made alignment much more proficient */
+  align-items: center; /* vertical center alignment of nav items */
+  max-width: 1200px;   /* centers content within a max width, doesn't force nav bar to stretch out too far when big windows */
+  margin: 0 auto; /* auto = left and right margins are made equal */
+  padding: 0 2rem /* apparently rem is browsers base font size which is 16px, for a while I was solely reliant on using px but it got messy */;
+}
+
+.logo img {
+  height: 40px; /* logo size */
+}
+
+.nav-links {
+  list-style: none; /* remove the bullet points since I made the nav elements as an unordered list... */
+  display: flex;
+  gap: 3rem;        /* consistent spacing between the nav items */
+  margin-left: 4rem; /* without this, there would be no gap between the logo in the nav bar and the nav elements so they overlap, very messy */
+}
+
+
+.nav-links a {
+  text-decoration: none; /* removes underline since the nav elements are links to different pages and the default styling is underlined */
+  color: var(--text); /* the default text color for links would be blue or purple depending on whether the website was visited, not a fan */
+  font-weight: 600; /* this was a later addition, my nav bar looked so ugly before it */
+}
+
+.nav-links a:hover {
+  color: var(--brand-1); /* when you hover over a link on the nav bar, the color changes to a dark green - not necessary but my page seemed too boring */
+}
+
+.nav-welcome {
+  color: var(--brand-1); /* the welcome, user part is set to the dark green hover color by default since you can't click it - and it looked bland */
+  font-weight: 700; /* slightly more emphasis for the welcome part, just seemed rational */
+}
+
+
+/* ===========================
+   Page Title + Author
+   =========================== */
+h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+
+.author {
+  text-align: center;
+  font-size: 1.1rem;
+  font-style: italic;
+  color: #555;
+  margin: 0;
+}
+
+/* ===========================
+   Recipe Layout
+   =========================== */
+/* ===== RECIPE LAYOUT ===== */
+/* Main two-column layout for recipe and sidebar */
+.recipe-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: var(--white);
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+
+.recipe-text {
+  flex: 2;
+}
+
+/* Large hero image for recipe */
+.recipe-image {
+  flex: 1;
+  text-align: right;
+}
+
+
+.recipe-image img {
+  max-width: 100%;
+  border-radius: 10px;
+}
+
+/* ===========================
+   Recipe Votes
+   =========================== */
+/* ===== RECIPE LAYOUT ===== */
+/* Main two-column layout for recipe and sidebar */
+.recipe-container {
+  display: flex;
+  gap: 2rem;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+
+.recipe-text {
+  flex: 2;
+}
+
+/* ===== SIDEBAR ===== */
+/* Author info and ratings live here */
+.recipe-sidebar {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  text-align: center;
+}
+
+
+.recipe-sidebar img {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+
+
+.rating-box {
+  background: #fff;
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+
+.rating-box h3 {
+  margin-bottom: 0.5rem;
+}
+
+
+.vote-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+
+.vote-buttons button {
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+
+.vote-buttons .yum {
+  background-color: #28a745;
+  color: white;
+}
+
+
+.vote-buttons .tomato {
+  background-color: #dc3545;
+  color: white;
+}
+
+
+
+
+/* ===========================
+   Layout base
+   =========================== */
+html, body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+
+main {
+  flex: 1; /* Pushes footer to bottom if content is short */
+}
+
+/* ===========================
+   Footer
+   =========================== */
+footer {
+  background-color: var(--brand-1);
+  color: var(--white);
+  padding: 1.5rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  font-size: 0.9rem;
+}
+
+
+.footer-content p {
+  margin-bottom: 0.3rem;
+}
+
+
+.footer-brand {
+  font-weight: bold;
+  align-self: flex-end;
+}
+

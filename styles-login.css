@@ -1,0 +1,104 @@
+/* Reset & base */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Poppins", sans-serif;
+  background-image: url("/static/images/kitchen-cartoon.png");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* Heading */
+.heading-container {
+  background-color: rgba(255, 255, 255, 1);
+  padding: 15px 30px;
+  border-radius: 10px;
+  margin: 20px auto;
+  width: fit-content;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+  margin: 0;
+}
+
+/* Form layout */
+#login-form {
+  padding: 0 16px;
+}
+
+fieldset {
+  border: none;
+  border-radius: 10px;
+  width: 30em;
+  max-width: 95%;
+  margin: 0 auto;
+  background-color: #f0f7e8;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: 12px;
+}
+
+label {
+  display: block;
+  font-weight: 600;
+}
+
+input {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #fff;
+  color: #333;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+input:focus {
+  border-color: #6A8D5A;
+  outline: none;
+  box-shadow: 0 0 6px rgba(106, 141, 90, 0.2);
+}
+
+input::placeholder {
+  color: #aaa;
+}
+
+/* Submit */
+.submit-container {
+  text-align: center;
+  margin-top: 8px;
+}
+
+input[type="submit"],
+button[type="submit"] {
+  background-color: #4CAF50;
+  color: #fff;
+  padding: 12px 24px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+input[type="submit"]:hover,
+button[type="submit"]:hover {
+  filter: brightness(0.95);
+}

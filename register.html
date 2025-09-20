@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cookbook Registration</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles-register.css') }}">
+</head>
+<body>
+  <div class="heading-container">
+    <h1 id="title">Register for CookBook!</h1>
+    <p id="description">Please fill in this form to sign up for the CookBook platform!</p>
+  </div>
+
+  <form id="register-form" method="post" action="{{ url_for('register') }}">
+    <fieldset>
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" placeholder="Enter your name" required><br>
+
+      <label for="number">Age (must be 16+):</label>
+      <input type="number" id="age" name="age" min="16" max="120" placeholder="Age" required><br>
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" placeholder="Enter your email" required><br>
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" placeholder="Enter your password" required><br><br>
+
+      <label for="dropdown">Which of the following best describes you currently:</label>
+      <select id="dropdown" name="occupation" required>
+        <option value="">Please select one</option>
+        <option value="unemployed">Unemployed</option>
+        <option value="part-time">Part-time Employed</option>
+        <option value="full-employed">Full-time Employed</option>
+        <option value="student">Student</option>
+      </select>
+
+      <p>Of the options below, which are you most comfortable making?</p>
+      <input type="radio" id="starters" name="dish-choice" value="starters">
+      <label for="starters" class="radio-label">Starters</label>
+
+      <input type="radio" id="main-dishes" name="dish-choice" value="main-dishes">
+      <label for="main-dishes" class="radio-label">Main Dishes</label>
+
+      <input type="radio" id="sides" name="dish-choice" value="sides">
+      <label for="sides" class="radio-label">Sides</label>
+
+      <input type="radio" id="desserts" name="dish-choice" value="desserts">
+      <label for="desserts" class="radio-label">Desserts</label>
+
+      <p>Do you follow any particular dietary practices? Select all that apply:</p>
+      <input type="checkbox" id="diet1" name="diet[]" value="halal">
+      <label for="diet1" class="checkbox-label">Halal</label>
+
+      <input type="checkbox" id="diet2" name="diet[]" value="vegetarian">
+      <label for="diet2" class="checkbox-label">Vegetarian</label>
+
+      <input type="checkbox" id="diet3" name="diet[]" value="vegan">
+      <label for="diet3" class="checkbox-label">Vegan</label>
+
+      <input type="checkbox" id="diet4" name="diet[]" value="gluten-free">
+      <label for="diet4" class="checkbox-label">Gluten-free</label>
+
+      <br><br><p>Tell us a bit about yourself and your journey:</p>
+      <textarea id="bio" name="bio" rows="4" cols="50" maxlength="300" placeholder="What do you want to achieve?"></textarea>
+
+      <input type="checkbox" id="terms" name="terms" value="accepted" required>
+      <label for="terms" class="terms-and-conditions">
+        I accept the <a href="link">terms and conditions</a>
+      </label>
+
+      <div class="submit-container">
+        <input type="submit" id="submit" value="Submit">
+      </div>
+    </fieldset>
+  </form>
+</body>
+</html>

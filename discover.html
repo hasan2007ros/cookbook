@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discover Recipes</title>
+  <!-- Jinja `url_for('static', ...)` below generates the proper URL for the page-specific CSS. -->
+  <!-- Avoids hardcoding /static path; uses Flask's static route. -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles-discover.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="logo">
+        <!-- Load logo from static folder via Flask -->
+        <img src="{{ url_for('static', filename='logos/navigator logo.png') }}" alt="Cookbook Logo">
+      </div>
+      <ul class="nav-links">
+        <!-- Link to home route -->
+        <li><a href="{{ url_for('home') }}">Home</a></li>
+        <!-- Link to discover route -->
+        <li><a href="{{ url_for('discover') }}">Discover</a></li>
+        <!-- Random recipe route -->
+        <li><a href="{{ url_for('random_recipe') }}">Surprise Me!</a></li>
+        <li><a href="#">Forum</a></li>
+        <!-- If user logged in, show personalised nav -->
+        {% if session.get('user_name') %}
+          <!-- Output the username from session -->
+          <li class="nav-welcome">Welcome, {{ session['user_name'] }}!</li>
+          <!-- Authenticated-only actions -->
+          <li><a href="{{ url_for('upload_recipe') }}">Upload Recipe</a></li>
+          <!-- Authenticated-only actions -->
+          <li><a href="{{ url_for('logout') }}">Logout</a></li>
+        {% else %}
+          <!-- Guest-only actions -->
+          <li><a href="{{ url_for('login') }}">Login</a></li>
+          <!-- Guest-only actions -->
+          <li><a href="{{ url_for('register') }}">Register</a></li>
+        {% endif %}
+      </ul>
+    </nav>
+  </header>
+  
+  <main>
+    <h1 class="page-title">Discover Recipes</h1>
+    <div class="recipes-grid">
+      <!-- Iterate over `recipes` list/rows passed from Flask. Indexes refer to tuple positions from DB query. -->
+      {% for recipe in recipes %}
+        <div class="recipe-card">
+          <!-- Link each card to detailed recipe page using its id (recipe[0]) -->
+          <a href="{{ url_for('recipe_detail', recipe_id=recipe[0]) }}">
+            <!-- If an image filename exists at index 2, show it; otherwise use placeholder image. -->
+            {% if recipe[2] %}
+              <!-- Serve uploaded image from /static/uploads/ + stored filename -->
+              <img src="{{ url_for('static', filename='uploads/' ~ recipe[2]) }}" alt="{{ recipe[1] }}">
+            {% else %}
+              <!-- Fallback image when no upload is present -->
+              <img src="{{ url_for('static', filename='images/placeholder.jpg') }}" alt="Placeholder">
+            {% endif %}
+          </a>
+          <div class="card-content">
+            <!-- Recipe name (index 1) -->
+            <h2>{{ recipe[1] }}</h2>
+            <!-- Type/category text (index 4) -->
+            <p><strong>Type:</strong> {{ recipe[4] }}</p>
+            <!-- Preparation time in minutes (index 5) -->
+            <p><strong>Prep Time:</strong> {{ recipe[5] }} min</p>
+            <p><strong>By:</strong> 
+              <!-- Link to the author's kitchen profile page by user_id (index 6); display username (index 7) -->
+              <a href="{{ url_for('view_kitchen', user_id=recipe[6]) }}">{{ recipe[7] }}</a>
+            </p>
+          </div>
+        </div>
+      <!-- End recipes loop -->
+      {% endfor %}
+    </div>
+  </main>
+
+  <footer>
+   <div class="footer-content">
+    <p>Contact us:</p>
+    <p>Email: cookbook-official@gmail.com</p>
+    <p>Phone: +447123074309</p>
+   </div>
+   <div class="footer-brand">
+    @Cookbook 2025
+   </div>
+  </footer>
+</body>
+</html>

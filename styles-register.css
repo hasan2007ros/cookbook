@@ -1,0 +1,147 @@
+body {
+  background-image: url("/static/images/kitchen-cartoon.png");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  min-height: 100vh;
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+}
+
+h1 {
+  text-align: center;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.heading-container {
+  background-color: rgba(255, 255, 255);
+  padding: 15px 30px;
+  border-radius: 10px;
+  margin: 20px auto;
+  width: fit-content;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#description {
+  text-align: center;
+  color: darkgreen;
+  font-size: 18px;
+  font-style: italic;
+  margin-bottom: 10px;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+input,
+textarea,
+select {
+  padding: 5px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-family: "Poppins", sans-serif;
+  background-color: white;
+  color: #333;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+#number-label, #name-label, #email-label, #password-label {
+  margin-left: 0;   /* was: auto */
+}
+
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="password"] {
+  width: 100%;
+  max-width: 400px;
+  margin-right: 150px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="password"] {
+  margin-left: 10px;
+}
+
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: #6A8D5A;
+  outline: none;
+  box-shadow: 0 0 6px rgba(106, 141, 90, 0.2);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #aaa;
+  font-family: "Poppins", sans-serif;
+}
+
+fieldset {
+  border-radius: 10px;
+  width: 30em;
+  margin: 0 auto;
+  background-color: #f0f7e8;
+}
+
+select {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: white;
+  color: #333;
+  cursor: pointer;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+textarea {
+  margin-left: 5px;
+  resize: none;
+  overflow: auto;
+  font-family: "Poppins", sans-serif;
+  width: 35em;
+}
+
+input[type="submit"],
+button[type="submit"] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 24px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.submit-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.radio-label,
+.checkbox-label {
+  margin-left: 0;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  display: inline-block;
+  width: auto;
+  height: auto;
+  margin-left: 30px;
+}
+
+.terms-and-conditions {
+  margin-left: 10px;
+}

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Kitchen</title>
+    <!-- Uses Jinja to link to the styling for my kitchen -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles-kitchen.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+	<nav>
+      <div class="logo">
+        <img src="{{ url_for('static', filename='logos/navigator logo.png') }}" alt="Cookbook Logo">
+      </div>
+		  <ul class="nav-links">
+			<!-- Jinja url_for function is used to generate the correct paths to routes, this took way too long... -->
+			<li><a href="{{ url_for('home') }}">Home</a></li>
+			<li><a href="{{ url_for('discover') }}">Discover</a></li>
+			<li><a href="{{ url_for('random_recipe') }}">Surprise Me!</a></li>
+			<li><a href="#">Forum</a></li>
+			<!-- If the user is logged in (session has 'user_name') and displays a small welcome message to the logged in user -->
+			{% if session.get('user_name') %}
+			  <li class="nav-welcome">Welcome, {{ session['user_name'] }}!</li> <!-- Displays the welcome message -->
+			  <li><a href="{{ url_for('upload_recipe') }}">Upload Recipe</a></li>
+			  <li><a href="{{ url_for('logout') }}">Logout</a></li>
+			{% else %}
+			  <!-- If no user logged in, displays login/register links in the nav bar -->
+			  <li><a href="{{ url_for('login') }}">Login</a></li>
+			  <li><a href="{{ url_for('register') }}">Register</a></li>
+			{% endif %}
+		  </ul>
+    </nav>
+  </header>
+  
+	<header class="banner">
+	  {% if user[1] %} 
+		<!-- if the user has uploaded a banner image, display it user[1] is banner image filename -->
+		<img src="{{ url_for('static', filename='uploads/' ~ user[1]) }}?v={{ range(1, 1000000) | random }}" 
+			 alt="Banner" class="banner-img">
+		<!-- ^ ?v=random number apparently forces it to refresh - I had no idea this was suggested by ChatGPT -->
+	  {% else %}
+		<!-- if no banner image, just show a placeholder div so it doesn’t look empty -->
+		<div class="banner-placeholder"></div>
+	  {% endif %}
+
+	  <div class="profile-section">
+		{% if user[2] %}
+		  <!-- if the user has uploaded a profile picture, display it user[2] is profile picture filename -->
+		  <img src="{{ url_for('static', filename='uploads/' ~ user[2]) }}?v={{ range(1, 1000000) | random }}" 
+			   alt="Profile Picture" class="profile-pic">
+		{% else %}
+		  <!-- if no profile pic, display a placeholder profile picture -->
+		  <div class="profile-placeholder"></div>
+		{% endif %}
+		
+		<!-- display the username (user[0]) next to the profile -->
+		<h1>{{ user[0] }}</h1>
+	  </div>
+	</header>
+
+
+	{% if session.get('user_id') %}
+	  <!-- only show these upload controls if the user is logged in (the session has user_id) -->
+	  <div class="upload-controls">
+		
+		<!-- form to upload a banner image -->
+		<form method="POST" action="{{ url_for('upload_banner') }}" enctype="multipart/form-data"> <!-- enctype is used because we're not submitting text -->
+		  <input type="file" name="banner" accept="image/*" required>
+		  <button type="submit">Upload Banner</button>
+		</form>
+
+		<!-- form to upload a profile picture -->
+		<form method="POST" action="{{ url_for('upload_profile_pic') }}" enctype="multipart/form-data">
+		  <input type="file" name="profile_pic" accept="image/*" required>
+		  <button type="submit">Upload Profile</button>
+		</form>
+	  </div>
+	{% endif %}
+
+	{% if user[3] %}
+	  <!-- if the user has written a bio (user[3]), display it on their page -->
+	  <div class="user-bio">
+		<p>{{ user[3] }}</p>
+	  </div>
+	{% endif %}
+
+	<main>
+	  <h2>My Recipes</h2>
+	  
+	  {% if recipes %}
+		<!-- if the user has uploaded recipes, display them them -->
+		<div class="recipe-scroll">
+		  {% for recipe in recipes %}
+			<!-- loop through each recipe in the list -->
+			<div class="recipe-card">
+			  <!-- clicking the card takes you to the recipe detail page -->
+			  <a href="{{ url_for('recipe_detail', recipe_id=recipe[0]) }}">
+				
+				{% if recipe[2] %}
+				  <!-- if the recipe has an uploaded image (recipe[2]) show it -->
+				  <img src="{{ url_for('static', filename='uploads/' ~ recipe[2]) }}" alt="{{ recipe[1] }}">
+				{% else %}
+				  <!-- if no image, fall back to a default placeholder -->
+				  <img src="{{ url_for('static', filename='default-recipe.jpg') }}" alt="Default Recipe">
+				{% endif %}
+				
+				<!-- display the details on the card: recipe[1] = recipe title, recipe[3] = star rating -->
+				<p>{{ recipe[1] }} (⭐ {{ recipe[3] }})</p>
+			  </a>
+			</div>
+		  {% endfor %}
+		</div>
+	  {% else %}
+		<!-- if the user has no recipes at all, show a friendly message - I think this line is free marks -->
+		<p class="no-recipes">Oops... you have no recipes! Try creating one.</p>
+	  {% endif %}
+	</main>
+
+
+    <footer>
+    <div class="footer-content">
+      <p>Contact us:</p>
+      <p>Email: cookbook-official@gmail.com</p>
+      <p>Phone: +447123074309</p>
+    </div>
+    <div class="footer-brand">@Cookbook 2025</div>
+  </footer>
+</body>
+</html>

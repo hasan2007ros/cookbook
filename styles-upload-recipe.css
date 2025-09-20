@@ -1,0 +1,213 @@
+
+
+/* ===== GLOBAL & TOKENS ===== */
+/* Shared color variables for Upload Recipe page */
+:root {
+  --bg: #FBF1DE;
+  --text: #333333;
+  --brand-1: #2C6E49;
+  --brand-2: #437A46;
+  --card: #6A8D5A;
+  --white: #FFFFFF;
+}
+
+/* ===== HEADER & NAVIGATION ===== */
+header {
+  background-color: var(--white);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* the slight shadow looks so much better... */
+  padding: 0.75rem 0;
+}
+
+nav {
+  display: flex; /* Flexbox - very difficult to understand and needed ChatGPT help with alignment but made alignment much more proficient */
+  align-items: center; /* vertical center alignment of nav items */
+  max-width: 1200px;   /* centers content within a max width, doesn't force nav bar to stretch out too far when big windows */
+  margin: 0 auto; /* auto = left and right margins are made equal */
+  padding: 0 2rem /* apparently rem is browsers base font size which is 16px, for a while I was solely reliant on using px but it got messy */;
+}
+
+.logo img {
+  height: 40px; /* logo size */
+}
+
+.nav-links {
+  list-style: none; /* remove the bullet points since I made the nav elements as an unordered list... */
+  display: flex;
+  gap: 3rem;        /* consistent spacing between the nav items */
+  margin-left: 4rem; /* without this, there would be no gap between the logo in the nav bar and the nav elements so they overlap, very messy */
+}
+
+
+.nav-links a {
+  text-decoration: none; /* removes underline since the nav elements are links to different pages and the default styling is underlined */
+  color: var(--text); /* the default text color for links would be blue or purple depending on whether the website was visited, not a fan */
+  font-weight: 600; /* this was a later addition, my nav bar looked so ugly before it */
+}
+
+.nav-links a:hover {
+  color: var(--brand-1); /* when you hover over a link on the nav bar, the color changes to a dark green - not necessary but my page seemed too boring */
+}
+
+.nav-welcome {
+  color: var(--brand-1); /* the welcome, user part is set to the dark green hover color by default since you can't click it - and it looked bland */
+  font-weight: 700; /* slightly more emphasis for the welcome part, just seemed rational */
+}
+
+
+
+body {
+  background-color: #FBF1DE;
+  color: #333;
+  line-height: 1.6;
+  font-family: 'Nunito', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+
+
+.heading-container {
+  background-color: rgba(255, 255, 255, 0.85);
+  text-align: center;
+  padding: 1rem 2rem;
+  border-radius: 10px;
+  margin: 2rem auto;
+  max-width: 800px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+
+h1 {
+  color: #437A46;
+  font-weight: 700;
+  margin: 0;
+}
+
+
+#description {
+  font-style: italic;
+  color: #2C6E49;
+}
+
+/* The main form element */
+form {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+
+fieldset {
+  border: none;
+  border-radius: 10px;
+  background: #6A8D5A;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+
+input[type="text"], input[type="number"], textarea, input[type="file"], select {
+  width: 95%;
+  max-width: 700px;
+  box-sizing: border-box;
+  padding: 0.6rem;
+  margin-top: 0.3rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-family: 'Nunito', sans-serif;
+}
+
+
+.input-query, /* Labels for form inputs */
+label {
+  color: #fff;
+  font-weight: bold;
+}
+
+
+input[type="text"],
+input[type="number"],
+textarea,
+/* File upload field */
+input[type="file"] {
+  width: 100%;
+  padding: 0.6rem;
+  margin-top: 0.3rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-family: 'Nunito', sans-serif;
+}
+
+
+textarea {
+  resize: vertical;
+}
+
+
+button, 
+input[type="submit"] {
+  background-color: #2C6E49;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+}
+
+
+button:hover, 
+input[type="submit"]:hover {
+  background-color: #24523C;
+}
+
+
+
+.ingredient-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+
+.remove-ingredient {
+  background-color: #C94C4C;
+  padding: 0.4rem 0.8rem;
+}
+
+
+.remove-ingredient:hover {
+  opacity: 0.9;
+}
+
+
+.submit-container {
+  display: flex;
+  justify-content: center;
+}
+
+/* ===== FOOTER ===== */
+
+footer {
+  background-color: #2C6E49;
+  color: #fff;
+  padding: 1.5rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  font-size: 0.9rem;
+}
+
+
+.footer-content p {
+  margin-bottom: 0.3rem;
+}
+
+
+.footer-brand {
+  font-weight: bold;
+  align-self: flex-end;
+  margin-top: 1rem;
+}
